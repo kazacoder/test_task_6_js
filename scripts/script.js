@@ -33,34 +33,16 @@ let audi = {
 
 // part 1
 
-const date = new Date();
-let year = date.getFullYear();
+let currentYear = new Date().getFullYear();
 let cars = [mercedes, bmw, audi];
-let carsArray = []
-let carsAges = []
-let carsForSale = []
-let carsHP = []
 
-for (let car of cars) {
-    car.carAre = year - car.year;
-    carsArray.push(car.name + " " + car.model)
-    carsAges.push(car.carAre)
-    carsForSale.push(car.forSale)
-    carsHP.push(car.hp)
-}
+cars.forEach((car) => car.carAge = currentYear - car.year)
 
-
-let names = carsArray.join(', ');
-let averageAge = carsAges.reduce((a, b) => a + b) / carsAges.length;
-let atLeastOneForSale = carsForSale.some((el) => {
-    return el === true
-})
-let allYoungerThanFive = carsAges.every((el) => {
-    return el < 5
-})
-let atLeastOneHasLittleHp = carsHP.some((el) => {
-    return el < 250
-})
+let names = cars.map(el => `${el.name} ${el.model} `).join(', ');
+let averageAge = cars.reduce((sum, car) => sum + car.carAge, 0) / cars.length;
+let atLeastOneForSale = cars.some(car => car['forSale'] === true)
+let allYoungerThanFive = cars.every(car => car.carAge < 5)
+let atLeastOneHasLittleHp = cars.some(car => car.hp < 250)
 
 alert('Марка и модель всех авто - ' + names);
 alert('Средний возраст всех авто - ' + averageAge);
@@ -77,20 +59,19 @@ let car = mercedes
 if (car.name === 'Mercedes' && car.model === 'GL450') {
     alert('Мой любимый мерседес!')
 } else {
-    alert('Это - ' + car.name + ' ' + car.model)
+    alert(`Это - ${car.name} ${car.model}`)
 }
 
-if (car.carAre === 0) {
+if (car.carAge === 0) {
     alert('Новый автомобиль')
-} else if (car.carAre < 3) {
+} else if (car.carAge <= 3) {
     alert('Свежий автомобиль')
 } else {
-    alert('Лет этому авто: ' + car.carAre)
+    alert(`Лет этому авто: ${car.carAge}`)
 }
 
-var consumption = (car.engine > 3) ? ('Прожорливый автомобиль') : ('Экономичный автомобиль')
+let consumption = car.engine > 3 ? 'Прожорливый автомобиль' : 'Экономичный автомобиль'
 alert(consumption)
-
 
 let russianColors = {
     black: 'черный',
@@ -101,31 +82,7 @@ let russianColors = {
     blue: 'синий',
 }
 
-let russianColor = (russianColors[car.color]) ? (russianColors[car.color]) : ('Невозможно определить цвет автомобиля')
+let russianColor = russianColors[car.color] ?? 'Невозможно определить цвет автомобиля'
 alert(russianColor)
 
 
-// классика :)) :
-switch (car.color) {
-    case 'black':
-        russianColor = 'черный'
-        break;
-    case 'silver':
-        russianColor = 'серебристый'
-        break;
-    case 'red':
-        russianColor = 'красный'
-        break;
-    case 'white':
-        russianColor = 'белый'
-        break;
-    case 'gray':
-        russianColor = 'серый'
-        break;
-    case 'blue':
-        russianColor = 'синий'
-        break;
-    default:
-        russianColor = 'Невозможно определить цвет автомобиля'
-}
-alert(russianColor)
